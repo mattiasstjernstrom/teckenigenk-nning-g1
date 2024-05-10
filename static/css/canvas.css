@@ -58,6 +58,16 @@ canvas {
   text-align: center;
 }
 
+.whitebg {
+  margin: 0 5px;
+  padding: 0 5px;
+  background-color: white;
+  color: dodgerblue;
+  border: 2px solid rgb(16, 114, 211);
+  border-radius: 5px;
+  font-size: 80%;
+}
+
 input[type="file"] {
   display: none;
 }

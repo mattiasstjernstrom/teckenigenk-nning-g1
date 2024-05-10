@@ -19,12 +19,7 @@
 <div class="or">or</div>
 <form id="upload-form" class="upload" enctype="multipart/form-data">
   <label for="file">Upload Image</label>
-  <input
-    type="file"
-    id="file"
-    accept="image/*"
-    onchange="drawImageOnCanvas(this)"
-  />
+  <input type="file" id="file" accept="image/*" onchange="loadImage(this)" />
 </form>
 
 <div class="buttons">
