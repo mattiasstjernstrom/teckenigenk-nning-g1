@@ -10,7 +10,9 @@ def home():
     return render_template("main/index.html")
 
 
-# Api route, to check the drawing area:
+"""Api route, to check the drawing area, this might be an blueprint but for now it's just a route."""
+
+
 @main.route("/api")
 def api():
     return "API is working!"
