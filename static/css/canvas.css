@@ -32,6 +32,14 @@ canvas {
   padding: 10px;
 }
 
+#clear {
+  background-color: #c55a66;
+}
+
+#clear:hover {
+  background-color: #c82333;
+}
+
 .buttons input {
   display: inline-flex;
   margin: 20px auto;
