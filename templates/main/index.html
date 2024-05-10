@@ -1,8 +1,21 @@
 {% extends "./base-template.html" %} {% block title %}Drawing Area{% endblock %}
-{% block header %}
+{% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/canvas.css') }}"
+  type="text/css"
+/>{% endblock %} {% block header %}
 <h1>Drawing Area</h1>
 {% endblock %} {% block content %}
-<canvas id="drawingCanvas" width="800" height="600"></canvas>
+<div id="draw-area">
+  <canvas
+    id="drawingCanvas"
+    width="500"
+    height="500"
+    style="border: 1px solid #000"
+  ></canvas>
+</div>
+<button id="send-drawing" onclick="sendDrawing()">Check Letter</button>
 {% endblock %} {% block scripts %}
-<script src="{{ url_for('static', filename='drawing.js') }}"></script>
+<script src="{{ url_for('static', filename='js/drawing.js') }}"></script>
 {% endblock %}

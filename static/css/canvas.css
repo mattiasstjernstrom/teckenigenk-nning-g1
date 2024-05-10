@@ -1,0 +1,19 @@
+canvas {
+  border: 1px solid rgb(70, 70, 70);
+  background-color: rgb(255, 255, 255);
+  cursor: crosshair;
+  border-radius: 5px;
+  display: block;
+  margin: 0 auto;
+}
+
+#send-drawing {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
