@@ -5,7 +5,7 @@
   href="{{ url_for('static', filename='css/canvas.css') }}"
   type="text/css"
 />{% endblock %} {% block header %}
-<h1>Drawing Area</h1>
+<h1>Drawing Area:</h1>
 {% endblock %} {% block content %}
 <div id="draw-area">
   <canvas
@@ -15,7 +15,23 @@
     style="border: 1px solid #000"
   ></canvas>
 </div>
-<button id="send-drawing" onclick="sendDrawing()">Check Letter</button>
+
+<div class="or">or</div>
+<form id="upload-form" class="upload" enctype="multipart/form-data">
+  <label for="file">Upload Image: </label>
+  <input
+    type="file"
+    id="file"
+    accept="image/*"
+    onchange="drawImageOnCanvas(this)"
+  />
+</form>
+
+<div class="buttons">
+  <button id="send-drawing" onclick="sendDrawing()">Check Letter</button>
+  <button onclick="clearCanvas()">Clear Canvas</button>
+</div>
+
 {% endblock %} {% block scripts %}
 <script src="{{ url_for('static', filename='js/drawing.js') }}"></script>
 {% endblock %}

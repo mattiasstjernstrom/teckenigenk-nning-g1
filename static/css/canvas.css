@@ -7,8 +7,33 @@ canvas {
   margin: 0 auto;
 }
 
-#send-drawing {
+.buttons {
+  display: flex;
+  justify-content: center;
+  width: 400px;
+  margin: 0px auto;
+}
+
+.buttons button {
+  display: inline-flex;
+  margin: 20px auto 0px auto;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.or {
   display: block;
+  text-align: center;
+  font-style: italic;
+  padding: 10px;
+}
+
+.buttons input {
+  display: inline-flex;
   margin: 20px auto;
   padding: 10px 20px;
   background-color: #007bff;
@@ -16,4 +41,13 @@ canvas {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.upload {
+  width: 400px;
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  border: 1px solid rgb(70, 70, 70);
+  border-radius: 5px;
 }
