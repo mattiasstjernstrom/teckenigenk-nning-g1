@@ -1,4 +1,4 @@
-# Projektbeskrivning: Intelligent Teckenigenkänning
+# Intelligent Teckenigenkänning
 
 ### Mål:
 
