@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, render_template
 
 # Blueprint for main routes:
 main = Blueprint("main", __name__)
@@ -7,10 +7,10 @@ main = Blueprint("main", __name__)
 # Main site route:
 @main.route("/")
 def home():
-    return "Drawing area"
+    return render_template("main/index.html")
 
 
 # Api route, to check the drawing area:
 @main.route("/api")
 def api():
-    return "Api route"
+    return "API is working!"

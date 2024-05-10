@@ -1,0 +1,8 @@
+{% extends "./base-template.html" %} {% block title %}Drawing Area{% endblock %}
+{% block header %}
+<h1>Drawing Area</h1>
+{% endblock %} {% block content %}
+<canvas id="drawingCanvas" width="800" height="600"></canvas>
+{% endblock %} {% block scripts %}
+<script src="{{ url_for('static', filename='drawing.js') }}"></script>
+{% endblock %}
