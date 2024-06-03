@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function draw(e) {
     if (!painting) return;
-    ctx.lineWidth = 5;
+    ctx.lineWidth = 30;
     ctx.lineCap = "round";
     ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
     ctx.stroke();
@@ -77,10 +77,29 @@ function loadImage(input) {
 
 function sendDrawing() {
   const canvas = document.getElementById("drawingCanvas");
-  const dataURL = canvas.toDataURL();
-  console.log(dataURL); /* Send to server
-
+  const dataURL = canvas.toDataURL("image/png");
+  
   const sendButton = document.getElementById("send-drawing");
-  sendButton.innerHTML = "Send to server...";
-  sendButton.disabled = true; */
+  sendButton.innerHTML = "Sending...";
+  sendButton.disabled = true;
+
+  // AJAX request to send dataURL to the server
+  fetch('/upload-drawing', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ image: dataURL })
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+    sendButton.innerHTML = "Check Letter";
+    sendButton.disabled = false;
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+    sendButton.innerHTML = "Check Letter";
+    sendButton.disabled = false;
+  });
 }
