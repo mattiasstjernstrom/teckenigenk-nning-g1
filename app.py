@@ -12,8 +12,8 @@ app.register_blueprint(main_routes)
 
 # Set the path for the drawn images folder
 IMAGES_FOLDER = 'teckenigenk-nning-g1/drawn_images'
-if not os.path.exists(IMAGES_FOLDER):
-    os.makedirs(IMAGES_FOLDER)
+#if not os.path.exists(IMAGES_FOLDER):
+#    os.makedirs(IMAGES_FOLDER)
 
 @app.route('/upload-drawing', methods=['POST'])
 def upload_drawing():
