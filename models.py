@@ -51,22 +51,18 @@ def train_RF():
     print(f"RF Model Accuracy: {accuracy}")
     return rf
 
-# Predict the digit based on user input
-def predict_digit(model, input_image):
-    # Convert input image to the same format as the training data
-    input_image = input_image.convert("L")  # Convert to grayscale
-    input_image = input_image.resize((28, 28))  # Resize to 28x28
 
-    # Invert the colors: make sure background is white and digits are black
-    input_array = np.array(input_image)
-    input_array = 255 - input_array  # Invert colors
-    input_array = input_array.reshape(1, -1)  # Flatten to a 1D array
+def predict_digit(model, input_image):
+
+    input_image = input_image.convert("L")  # Konverterar till gråskala
+    input_image = input_image.resize((28, 28))  # Skala om till 28x28
+
+    input_array = np.array(input_image) # Bilden konverteras till en np-array
+    input_array = 255 - input_array  # Inverterar färger.
+    input_array = input_array.reshape(1, -1)  # Omvandlas till en 1D array
     
-    # Ensure the input data is a DataFrame with the same columns as the training data
+    # Gör om datan till Dataframe med samma antal Kolumner som tränings datan.
     input_df = pd.DataFrame(input_array, columns=[f'pixel{i}' for i in range(784)])
-    
-    # Print the input data to ensure it looks correct
-    print("Input data for prediction:", input_df)
-    
+        
     prediction = model.predict(input_df)
     return prediction[0]
