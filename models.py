@@ -1,6 +1,8 @@
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn import svm
+from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 import numpy as np
@@ -14,7 +16,34 @@ def load_mnist_data():
     return df_mnist_train, df_mnist_test
 
 # Mappning av modellens utgångar till tecken (0-9)
-labels = '0123456789'
+#labels = '0123456789'
+
+def train_SVM():
+    df_mnist_train, df_mnist_test = load_mnist_data()
+    
+    X_train = df_mnist_train.drop(columns=['label'])
+    y_train = df_mnist_train['label']
+    X_test = df_mnist_test.drop(columns=['label'])
+    y_test = df_mnist_test['label']
+
+    # Standardisera funktionerna (pixlarna) för att förbättra prestanda för SVM
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_test_scaled = scaler.transform(X_test)
+
+    # Skapa en SVM-modell
+    svm_model = svm.SVC(kernel='rbf', C=1, gamma='scale')
+
+    # Träna modellen
+    svm_model.fit(X_train_scaled, y_train)
+
+    # Utvärdera modellen
+    accuracy = svm_model.score(X_test_scaled, y_test)
+    print("SVM Model Accuracy:", accuracy)
+    
+    # Returnera tränad modell
+    return svm_model
+
 
 def train_KNN():
     df_mnist_train, df_mnist_test = load_mnist_data()

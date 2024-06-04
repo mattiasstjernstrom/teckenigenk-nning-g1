@@ -104,10 +104,11 @@ function sendDrawing() {
     // Get the RF and KNN predictions from the server response
     const prediction_RF = data.prediction_RF;
     const prediction_KNN = data.prediction_KNN;
+    const prediction_SVM = data.prediction_SVM;
 
     // Update the page with the predicted numbers
     const predictionMessage = document.getElementById("prediction-message");
-    predictionMessage.innerHTML = `Predicted Number with RF: ${prediction_RF}<br>Predicted Number with KNN: ${prediction_KNN}`;
+    predictionMessage.innerHTML = `Predicted Number with RF: ${prediction_RF}<br>Predicted Number with KNN: ${prediction_KNN}<br>Predicted Number with SVM: ${prediction_SVM}`;
   })
   .catch((error) => {
     console.error('Error:', error);

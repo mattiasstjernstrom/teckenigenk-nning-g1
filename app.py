@@ -3,7 +3,7 @@ from PIL import Image
 import base64
 import os
 from datetime import datetime
-from models import train_RF, predict_digit, train_KNN
+from models import train_RF, predict_digit, train_KNN, train_SVM
 import numpy as np
 
 app = Flask(__name__)
@@ -20,6 +20,7 @@ if not os.path.exists(IMAGES_FOLDER):
 
 rf_mnist_model = train_RF()
 KNN_mnist_model = train_KNN()
+SVM_mnist_model = train_SVM()
 
 @app.route('/upload-drawing', methods=['POST'])
 def upload_drawing():
@@ -53,6 +54,7 @@ def upload_drawing():
     # Predict the digit using the model
     prediction_RF = predict_digit(rf_mnist_model, img)
     prediction_KNN = predict_digit(KNN_mnist_model, img)
+    prediction_SVM = predict_digit(SVM_mnist_model, img)
     
     # Print the prediction to check if it's correct
     print("Prediction:", prediction_RF)
@@ -62,7 +64,8 @@ def upload_drawing():
     return jsonify({'status': 'success',
                      'filename': image_filename,
                        'prediction_RF': int(prediction_RF),
-                       'prediction_KNN': int(prediction_KNN)})
+                       'prediction_KNN': int(prediction_KNN),
+                       'prediction_SVM': int(prediction_SVM)})
 
 
 if __name__ == "__main__":
