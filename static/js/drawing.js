@@ -32,6 +32,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const label = document.querySelector("label[for=file]");
     fileInput.value = "";
     label.innerText = "Browse Files";
+
+    // Rensa prediktionsnotisen
+    const predictionMessage = document.getElementById("prediction-message");
+    predictionMessage.innerHTML = '';
   }
 
   canvas.addEventListener("mousedown", startPosition);
@@ -96,6 +100,11 @@ function sendDrawing() {
     console.log('Success:', data);
     sendButton.innerHTML = "Check Letter";
     sendButton.disabled = false;
+
+    // Update the page with the predicted number
+    const prediction = data.prediction;
+    const predictionMessage = document.getElementById("prediction-message");
+    predictionMessage.innerHTML = `Predicted Number: ${prediction}`;
   })
   .catch((error) => {
     console.error('Error:', error);

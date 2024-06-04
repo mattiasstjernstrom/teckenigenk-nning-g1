@@ -1,7 +1,10 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, redirect, url_for, render_template
+from PIL import Image
 import base64
 import os
 from datetime import datetime
+from models import train_rf_mnist, predict_digit
+import numpy as np
 
 app = Flask(__name__)
 
@@ -14,6 +17,8 @@ app.register_blueprint(main_routes)
 IMAGES_FOLDER = 'drawn_images'
 if not os.path.exists(IMAGES_FOLDER):
     os.makedirs(IMAGES_FOLDER)
+
+rf_mnist_model = train_rf_mnist()
 
 @app.route('/upload-drawing', methods=['POST'])
 def upload_drawing():
@@ -30,8 +35,29 @@ def upload_drawing():
     with open(image_filename, "wb") as fh:
         fh.write(base64.b64decode(image_data))
     
-    # Return a success message
-    return jsonify({'status': 'success', 'filename': image_filename})
+    # Open the saved image with Pillow
+    img = Image.open(image_filename)
+    
+    # Convert image to white background
+    img = img.convert("RGBA")
+    white_bg = Image.new("RGBA", img.size, "WHITE")
+    img = Image.alpha_composite(white_bg, img).convert("L")
+    
+    # Save the image with a white background
+    img.save(image_filename)
+    
+    # Print the image filename to ensure it was saved correctly
+    print("Saved image filename:", image_filename)
+    
+    # Predict the digit using the model
+    prediction = predict_digit(rf_mnist_model, img)
+    
+    # Print the prediction to check if it's correct
+    print("Prediction:", prediction)
+    
+    # Return a success message with the prediction and filenames
+    return jsonify({'status': 'success', 'filename': image_filename, 'prediction': int(prediction)})
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
