@@ -101,10 +101,13 @@ function sendDrawing() {
     sendButton.innerHTML = "Check Letter";
     sendButton.disabled = false;
 
-    // Update the page with the predicted number
-    const prediction = data.prediction;
+    // Get the RF and KNN predictions from the server response
+    const prediction_RF = data.prediction_RF;
+    const prediction_KNN = data.prediction_KNN;
+
+    // Update the page with the predicted numbers
     const predictionMessage = document.getElementById("prediction-message");
-    predictionMessage.innerHTML = `Predicted Number: ${prediction}`;
+    predictionMessage.innerHTML = `Predicted Number with RF: ${prediction_RF}<br>Predicted Number with KNN: ${prediction_KNN}`;
   })
   .catch((error) => {
     console.error('Error:', error);

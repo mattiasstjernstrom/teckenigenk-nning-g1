@@ -1,5 +1,6 @@
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 import numpy as np
@@ -15,8 +16,27 @@ def load_mnist_data():
 # Mappning av modellens utgångar till tecken (0-9)
 labels = '0123456789'
 
+def train_KNN():
+    df_mnist_train, df_mnist_test = load_mnist_data()
+    
+    X_train = df_mnist_train.drop(columns=['label'])
+    y_train = df_mnist_train['label']
+    X_test = df_mnist_test.drop(columns=['label'])
+    y_test = df_mnist_test['label']
+
+    clf = KNeighborsClassifier(n_neighbors=5)
+    clf.fit(X_train,y_train)
+
+    y_pred = clf.predict(X_test)
+
+    accuracy = accuracy_score(y_test, y_pred)
+    print(f'KNN Model Accuracy: {accuracy}')
+    return clf
+
+
+
 # Träna modellen
-def train_rf_mnist():
+def train_RF():
     df_mnist_train, df_mnist_test = load_mnist_data()
 
     X_train = df_mnist_train.drop(columns=['label'])
@@ -28,7 +48,7 @@ def train_rf_mnist():
     rf.fit(X_train, y_train)
     
     accuracy = rf.score(X_test, y_test)
-    print(f"MNIST Model Accuracy: {accuracy}")
+    print(f"RF Model Accuracy: {accuracy}")
     return rf
 
 # Predict the digit based on user input
