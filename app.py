@@ -38,11 +38,26 @@ def upload_drawing():
     # Open the saved image with Pillow
     img = Image.open(image_filename)
     
+    # Convert image to white background
+    img = img.convert("RGBA")
+    white_bg = Image.new("RGBA", img.size, "WHITE")
+    img = Image.alpha_composite(white_bg, img).convert("L")
+    
+    # Save the image with a white background
+    img.save(image_filename)
+    
+    # Print the image filename to ensure it was saved correctly
+    print("Saved image filename:", image_filename)
+    
     # Predict the digit using the model
     prediction = predict_digit(rf_mnist_model, img)
     
+    # Print the prediction to check if it's correct
+    print("Prediction:", prediction)
+    
     # Return a success message with the prediction and filenames
     return jsonify({'status': 'success', 'filename': image_filename, 'prediction': int(prediction)})
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

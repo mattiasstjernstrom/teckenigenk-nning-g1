@@ -36,11 +36,17 @@ def predict_digit(model, input_image):
     # Convert input image to the same format as the training data
     input_image = input_image.convert("L")  # Convert to grayscale
     input_image = input_image.resize((28, 28))  # Resize to 28x28
-    input_array = np.array(input_image).reshape(1, -1)  # Flatten to a 1D array
-    input_array = 255 - input_array  # Invert colors (if necessary)
 
+    # Invert the colors: make sure background is white and digits are black
+    input_array = np.array(input_image)
+    input_array = 255 - input_array  # Invert colors
+    input_array = input_array.reshape(1, -1)  # Flatten to a 1D array
+    
     # Ensure the input data is a DataFrame with the same columns as the training data
     input_df = pd.DataFrame(input_array, columns=[f'pixel{i}' for i in range(784)])
+    
+    # Print the input data to ensure it looks correct
+    print("Input data for prediction:", input_df)
     
     prediction = model.predict(input_df)
     return prediction[0]
