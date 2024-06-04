@@ -3,7 +3,7 @@ from PIL import Image
 import base64
 import os
 from datetime import datetime
-from models import train_rf_mnist
+from models import train_rf_mnist, predict_digit
 import numpy as np
 
 app = Flask(__name__)
@@ -35,38 +35,14 @@ def upload_drawing():
     with open(image_filename, "wb") as fh:
         fh.write(base64.b64decode(image_data))
     
-    # Öppna den sparade bilden med Pillow
+    # Open the saved image with Pillow
     img = Image.open(image_filename)
     
-    # Konvertera till svartvit
-    bw_img = img.convert('L')
+    # Predict the digit using the model
+    prediction = predict_digit(rf_mnist_model, img)
     
-    # Ändra storlek till 28x28
-    resized_img = bw_img.resize((28, 28))
-    
-    # Spara den bearbetade bilden
-    resized_image_filename = os.path.join(IMAGES_FOLDER, f"{timestamp}_resized.png")
-    resized_img.save(resized_image_filename)
-    
-    # Omvandla bilden till en array av numeriska värden
-    image_array = np.array(resized_img)
-    
-    # Omvandla 2D-arrayen till en 1D-array för att passa in i modellen
-    image_data = image_array.flatten()
-    
-    # Gör förutsägelser med modellen
-    prediction = rf_mnist_model.predict([image_data])
-    
-    # Returnera en framgångsmeddelande
-    return jsonify({'status': 'success', 'filename': image_filename, 'resized_filename': resized_image_filename, 'prediction': int(prediction[0])})
-
-@app.route('/clear', methods=['GET'])
-def clear_and_redirect():
-    # Om det finns en specifik funktion för att rensa något på servern kan du kalla på den här.
-    # clearCanvasFunction()  # Om du har en sådan funktion
-
-    # Omdirigera till startsidan
-    return redirect(url_for('index'))
+    # Return a success message with the prediction and filenames
+    return jsonify({'status': 'success', 'filename': image_filename, 'prediction': int(prediction)})
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
