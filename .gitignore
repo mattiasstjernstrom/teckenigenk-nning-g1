@@ -3,3 +3,5 @@
 **/__pycache__/
 **/_liveserverhack
 .DS_Store
+emnist-balanced-test.csv
+emnist-balanced-train.csv
