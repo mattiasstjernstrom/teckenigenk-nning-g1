@@ -3,7 +3,7 @@ from PIL import Image
 import base64
 import os
 from datetime import datetime
-from models import train_RF, predict_digit, train_KNN, train_SVM
+from models import train_RF, predict_digit, train_KNN, train_SVM, train_KNN_EMNIST, predict_EMNIST
 import numpy as np
 
 app = Flask(__name__)
@@ -21,6 +21,7 @@ if not os.path.exists(IMAGES_FOLDER):
 rf_mnist_model = train_RF()
 KNN_mnist_model = train_KNN()
 SVM_mnist_model = train_SVM()
+KNN_EMNIST_model = train_KNN_EMNIST()
 
 @app.route('/upload-drawing', methods=['POST'])
 def upload_drawing():
@@ -55,6 +56,7 @@ def upload_drawing():
     prediction_RF = predict_digit(rf_mnist_model, img)
     prediction_KNN = predict_digit(KNN_mnist_model, img)
     prediction_SVM = predict_digit(SVM_mnist_model, img)
+    prediction_EMNIST_KNN = predict_EMNIST(KNN_EMNIST_model, img)
     
     # Print the prediction to check if it's correct
     print("Prediction:", prediction_RF)
@@ -65,8 +67,9 @@ def upload_drawing():
                      'filename': image_filename,
                        'prediction_RF': int(prediction_RF),
                        'prediction_KNN': int(prediction_KNN),
-                       'prediction_SVM': int(prediction_SVM)})
+                       'prediction_SVM': int(prediction_SVM),
+                       'prediction_KNN_EMNIST': prediction_EMNIST_KNN})
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(port=5000)
