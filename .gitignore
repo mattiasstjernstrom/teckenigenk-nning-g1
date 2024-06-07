@@ -5,4 +5,3 @@
 .DS_Store
 emnist-balanced-test.csv
 emnist-balanced-train.csv
-**/drawn_images
