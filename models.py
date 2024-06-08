@@ -46,7 +46,7 @@ def train_RF():
     y_test = df_emnist_test['label']
 
     start_time = time.time()  # Starta tidtagningen
-    rf = RandomForestClassifier(n_estimators=100)
+    rf = RandomForestClassifier(n_estimators=200)
     rf.fit(X_train, y_train)
     end_time = time.time()  # Stoppa tidtagningen
     training_time = end_time - start_time  # Beräkna tiden för träning
