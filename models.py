@@ -14,7 +14,7 @@ def load_emnist_data():
     df_emnist_test = pd.read_csv("data/emnist-balanced-test.csv")
     return df_emnist_train, df_emnist_test
 
-
+# Tränar modellen, bästa värde på k == 5.
 def train_KNN_EMNIST():
     df_emnist_train, df_emnist_test = load_emnist_data()
     
@@ -36,7 +36,7 @@ def train_KNN_EMNIST():
     return clf_EMINST
 
 
-# Träna modellen
+# Träna modellen, bästa antal träd == 200.
 def train_RF():
     df_emnist_train, df_emnist_test = load_emnist_data()
 
@@ -46,7 +46,7 @@ def train_RF():
     y_test = df_emnist_test['label']
 
     start_time = time.time()  # Starta tidtagningen
-    rf = RandomForestClassifier(n_estimators=200)
+    rf = RandomForestClassifier(n_estimators=50)
     rf.fit(X_train, y_train)
     end_time = time.time()  # Stoppa tidtagningen
     training_time = end_time - start_time  # Beräkna tiden för träning
