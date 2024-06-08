@@ -19,8 +19,6 @@ if not os.path.exists(IMAGES_FOLDER):
     os.makedirs(IMAGES_FOLDER)
 
 rf_mnist_model = train_RF()
-KNN_mnist_model = train_KNN()
-SVM_mnist_model = train_SVM()
 KNN_EMNIST_model = train_KNN_EMNIST()
 
 @app.route('/upload-drawing', methods=['POST'])
@@ -53,21 +51,17 @@ def upload_drawing():
     print("Saved image filename:", image_filename)
     
     # Predict the digit using the model
-    prediction_RF = predict_digit(rf_mnist_model, img)
-    prediction_KNN = predict_digit(KNN_mnist_model, img)
-    prediction_SVM = predict_digit(SVM_mnist_model, img)
+    prediction_RF = predict_EMNIST(rf_mnist_model, img)
     prediction_EMNIST_KNN = predict_EMNIST(KNN_EMNIST_model, img)
     
     # Print the prediction to check if it's correct
-    print("Prediction:", prediction_RF)
-    print("Prediction:", prediction_KNN)
+    print("Prediction RF:", prediction_RF)
+    print("Prediction KNN:", prediction_EMNIST_KNN)
     
     # Return a success message with the prediction and filenames
     return jsonify({'status': 'success',
                      'filename': image_filename,
-                       'prediction_RF': int(prediction_RF),
-                       'prediction_KNN': int(prediction_KNN),
-                       'prediction_SVM': int(prediction_SVM),
+                       'prediction_RF': (prediction_RF),
                        'prediction_KNN_EMNIST': prediction_EMNIST_KNN})
 
 
