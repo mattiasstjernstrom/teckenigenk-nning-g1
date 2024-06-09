@@ -58,8 +58,7 @@ def train_RF():
     return rf
 
 def train_ANN():
-    df_emnist_train = pd.read_csv('data/emnist-balanced-train.csv')
-    df_emnist_test = pd.read_csv('data/emnist-balanced-test.csv')
+    df_emnist_train, df_emnist_test = load_emnist_data()
 
     X_train = df_emnist_train.drop(columns=['label']).values / 255.0
     y_train = df_emnist_train['label']
