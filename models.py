@@ -4,6 +4,8 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn import svm
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
+from sklearn.neural_network import MLPClassifier
+from sklearn.model_selection import train_test_split
 import numpy as np
 from PIL import Image, ImageOps
 import time
@@ -55,6 +57,28 @@ def train_RF():
     print(f'Training Time: {training_time:.2f} seconds')
     return rf
 
+def train_ANN():
+    df_emnist_train = pd.read_csv('data/emnist-balanced-train.csv')
+    df_emnist_test = pd.read_csv('data/emnist-balanced-test.csv')
+
+    X_train = df_emnist_train.drop(columns=['label']).values / 255.0
+    y_train = df_emnist_train['label']
+    X_test = df_emnist_test.drop(columns=['label']).values / 255.0
+    y_test = df_emnist_test['label']
+
+    X_train_small, _, y_train_small, _ = train_test_split(X_train, y_train, train_size=0.3, random_state=1)
+
+    ann = MLPClassifier(hidden_layer_sizes=(64), max_iter=600, random_state=42)
+    start_time = time.time()  # Starta tidtagningen
+    ann.fit(X_train_small, y_train_small)
+    end_time = time.time()  # Stoppa tidtagningen
+    training_time = end_time - start_time  # Beräkna tiden för träning
+    accuracy = ann.score(X_test, y_test)
+    
+    print(f"ANN Model Accuracy: {accuracy:.3f}")
+    print(f'Training Time: {training_time:.2f} seconds')
+    return ann
+
 
 def predict_EMNIST(model, input_image):
 
@@ -81,12 +105,7 @@ def predict_EMNIST(model, input_image):
     41: 'g', 42: 'h', 43: 'n', 44: 'q', 45: 'r', 46: 't'
     }
     
-    # Print the predicted label
     prediction = label_map[y_pred[0]]
-    print(f'Predicted label: {label_map[y_pred[0]]}')
-    print(f'Predicted label: {prediction}')
-    print(f'Predicted label: {y_pred[0]}')
-    
     return prediction
 
 
@@ -159,5 +178,3 @@ def load_mnist_data():
     df_mnist_train = pd.read_csv("data/mnist_train_sample.csv")
     df_mnist_test = pd.read_csv("data/mnist_test_sample.csv")
     return df_mnist_train, df_mnist_test
-
-

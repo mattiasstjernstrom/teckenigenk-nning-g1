@@ -104,10 +104,11 @@ function sendDrawing() {
     // Get the RF and KNN predictions from the server response
     const prediction_RF = data.prediction_RF;
     const prediction_KNN_EMNIST = data.prediction_KNN_EMNIST;
+    const prediction_ANN = data.prediction_ANN;
 
     // Update the page with the predicted numbers
     const predictionMessage = document.getElementById("prediction-message");
-    predictionMessage.innerHTML = `Predicted letter/number with RF: ${prediction_RF}<br>Predicted letter/number with KNN EMNIST: ${prediction_KNN_EMNIST}`;
+    predictionMessage.innerHTML = `Predicted letter/number with RF: ${prediction_RF}<br>Predicted letter/number with KNN EMNIST: ${prediction_KNN_EMNIST}<br>Predicted letter/number with ANN: ${prediction_ANN}`;
   })
   .catch((error) => {
     console.error('Error:', error);
