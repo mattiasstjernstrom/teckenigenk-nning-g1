@@ -38,7 +38,7 @@ def train_KNN_EMNIST():
     return clf_EMINST
 
 
-# Träna modellen, bästa antal träd == 200.
+
 def train_RF():
     df_emnist_train, df_emnist_test = load_emnist_data()
 
@@ -48,7 +48,7 @@ def train_RF():
     y_test = df_emnist_test['label']
 
     start_time = time.time()  # Starta tidtagningen
-    rf = RandomForestClassifier(n_estimators=50)
+    rf = RandomForestClassifier(n_estimators=50) # Satt 50 för att hålla nere träningstid, men 200 gav bäst resultat.(skiljer bara 1.7%)
     rf.fit(X_train, y_train)
     end_time = time.time()  # Stoppa tidtagningen
     training_time = end_time - start_time  # Beräkna tiden för träning
@@ -65,7 +65,7 @@ def train_ANN():
     X_test = df_emnist_test.drop(columns=['label']).values / 255.0
     y_test = df_emnist_test['label']
 
-    X_train_small, _, y_train_small, _ = train_test_split(X_train, y_train, train_size=0.3, random_state=1)
+    X_train_small, _, y_train_small, _ = train_test_split(X_train, y_train, train_size=0.1, random_state=42)
 
     ann = MLPClassifier(hidden_layer_sizes=(64), max_iter=600, random_state=42)
     start_time = time.time()  # Starta tidtagningen
@@ -107,73 +107,3 @@ def predict_EMNIST(model, input_image):
     prediction = label_map[y_pred[0]]
     return prediction
 
-
-#----------------------- GAMLA KAN TAS BORT?   --------------------------------------------------------------------------
-
-
-
-
-
-
-def train_SVM():
-    df_mnist_train, df_mnist_test = load_mnist_data()
-    
-    X_train = df_mnist_train.drop(columns=['label'])
-    y_train = df_mnist_train['label']
-    X_test = df_mnist_test.drop(columns=['label'])
-    y_test = df_mnist_test['label']
-
-    # Standardisera funktionerna (pixlarna) för att förbättra prestanda för SVM
-    scaler = StandardScaler()
-    X_train_scaled = scaler.fit_transform(X_train)
-    X_test_scaled = scaler.transform(X_test)
-
-    # Skapa en SVM-modell
-    svm_model = svm.SVC(kernel='rbf', C=1, gamma='scale')
-
-    # Träna modellen
-    svm_model.fit(X_train_scaled, y_train)
-
-    # Utvärdera modellen
-    accuracy = svm_model.score(X_test_scaled, y_test)
-    print(f'SVM Model Accuracy: {accuracy:.3f}')    
-    # Returnera tränad modell
-    return svm_model
-
-def train_KNN():
-    df_mnist_train, df_mnist_test = load_mnist_data()
-    
-    X_train = df_mnist_train.drop(columns=['label'])
-    y_train = df_mnist_train['label']
-    X_test = df_mnist_test.drop(columns=['label'])
-    y_test = df_mnist_test['label']
-
-    clf = KNeighborsClassifier(n_neighbors=5)
-    clf.fit(X_train,y_train)
-
-    y_pred = clf.predict(X_test)
-
-    accuracy = accuracy_score(y_test, y_pred)
-    print(f'KNN Model Accuracy: {accuracy:.3f}')
-    return clf
-
-def predict_digit(model, input_image):
-
-    input_image = input_image.convert("L")  # Konverterar till gråskala
-    input_image = input_image.resize((28, 28))  # Skala om till 28x28
-
-    input_array = np.array(input_image) # Bilden konverteras till en np-array
-    input_array = 255 - input_array  # Inverterar färger.
-    input_array = input_array.reshape(1, -1)  # Omvandlas till en 1D array
-    
-    # Gör om datan till Dataframe med samma antal Kolumner som tränings datan.
-    input_df = pd.DataFrame(input_array, columns=[f'pixel{i}' for i in range(784)])
-        
-    prediction = model.predict(input_df)
-    return prediction[0]
-
-def load_mnist_data():
-    # Load MNIST dataset
-    df_mnist_train = pd.read_csv("data/mnist_train_sample.csv")
-    df_mnist_test = pd.read_csv("data/mnist_test_sample.csv")
-    return df_mnist_train, df_mnist_test
