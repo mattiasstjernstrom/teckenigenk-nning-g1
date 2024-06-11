@@ -29,7 +29,7 @@ canvas {
   display: block;
   text-align: center;
   font-style: italic;
-  padding: 10px;
+  padding: 10px 0;
 }
 
 #clear {
@@ -38,17 +38,6 @@ canvas {
 
 #clear:hover {
   background-color: #c82333;
-}
-
-.buttons input {
-  display: inline-flex;
-  margin: 20px auto;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 }
 
 .upload {
@@ -74,7 +63,6 @@ input[type="file"] {
 
 label {
   display: inline-flex;
-  margin: 20px auto;
   padding: 10px 20px;
   background-color: #007bff;
   color: white;

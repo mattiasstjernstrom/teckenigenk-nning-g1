@@ -4,9 +4,7 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='css/canvas.css') }}"
   type="text/css"
-/>{% endblock %} {% block header %}
-<h1>Drawing Area:</h1>
-{% endblock %} {% block content %}
+/>{% endblock %} {% block header %} {% endblock %} {% block content %}
 <div id="draw-area">
   <canvas
     id="drawingCanvas"
@@ -28,7 +26,6 @@
 </div>
 
 <div id="prediction-message"></div>
-
 
 {% endblock %} {% block scripts %}
 <script src="{{ url_for('static', filename='js/drawing.js') }}"></script>

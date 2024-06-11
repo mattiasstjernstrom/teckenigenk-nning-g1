@@ -33,9 +33,12 @@ document.addEventListener("DOMContentLoaded", function () {
     fileInput.value = "";
     label.innerText = "Browse Files";
 
-    // Rensa prediktionsnotisen
+    // Clear the prediction message
     const predictionMessage = document.getElementById("prediction-message");
     predictionMessage.innerHTML = '';
+
+    // Hide the prediction message
+    predictionMessage.style.display = "none";
   }
 
   canvas.addEventListener("mousedown", startPosition);
@@ -108,7 +111,13 @@ function sendDrawing() {
 
     // Update the page with the predicted numbers
     const predictionMessage = document.getElementById("prediction-message");
-    predictionMessage.innerHTML = `Predicted letter/number with RF: ${prediction_RF}<br>Predicted letter/number with KNN EMNIST: ${prediction_KNN_EMNIST}<br>Predicted letter/number with ANN: ${prediction_ANN}`;
+    predictionMessage.innerHTML = `<h3>Predicted letter/number:</h3>
+    Random Forest: <span class="highlight">${prediction_RF}</span><br />
+    KNN EMNIST: <span class="highlight">${prediction_KNN_EMNIST}</span><br />
+    ANN: <span class="highlight">${prediction_ANN}</span><br />`;
+
+    //show the prediction message
+    predictionMessage.style.display = "block";
   })
   .catch((error) => {
     console.error('Error:', error);

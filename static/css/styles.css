@@ -20,12 +20,19 @@ h1 {
   margin: 0 auto;
 }
 
-draw-area {
-  display: block;
-  width: 100%;
-  margin: 0 auto;
+#prediction-message {
+  display: none;
+  width: 400px;
+  text-align: center;
+  font-size: 1.5em;
+  margin: 20px auto;
   border: 1px solid rgb(70, 70, 70);
   background-color: rgb(255, 255, 255);
-  cursor: crosshair;
   border-radius: 5px;
+  line-height: 1.3;
+}
+
+
+.highlight {
+  font-weight: bold;
 }
