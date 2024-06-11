@@ -71,7 +71,7 @@ def train_ANN():
 
     X_train_small, _, y_train_small, _ = train_test_split(X_train, y_train, train_size=0.1, random_state=42)
 
-    ann = MLPClassifier(hidden_layer_sizes=(512,256,128,64), max_iter=600, learning_rate=0.001, random_state=42, activation="relu")
+    ann = MLPClassifier(hidden_layer_sizes=(512,256,128,64), max_iter=600, learning_rate='constant', learning_rate_init=0.001, random_state=42, activation="relu")
     start_time = time.time()  # Starta tidtagningen
     ann.fit(X_train_small, y_train_small)
     end_time = time.time()  # Stoppa tidtagningen
