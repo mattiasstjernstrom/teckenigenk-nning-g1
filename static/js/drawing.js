@@ -113,8 +113,8 @@ function sendDrawing() {
     const predictionMessage = document.getElementById("prediction-message");
     predictionMessage.innerHTML = `<h3>Predicted letter/number:</h3>
     Random Forest: <span class="highlight">${prediction_RF}</span><br />
-    KNN: <span class="highlight">${prediction_KNN_EMNIST}</span><br />
-    ANN: <span class="highlight">${prediction_ANN}</span><br />`;
+    K Nearest Neighbor: <span class="highlight">${prediction_KNN_EMNIST}</span><br />
+    Artificial Neural Network: <span class="highlight">${prediction_ANN}</span><br />`;
 
     //show the prediction message
     predictionMessage.style.display = "block";
